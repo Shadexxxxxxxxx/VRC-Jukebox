@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shade + Sierra VRC Jukebox</title>
+<style>
+  body {
+    margin: 0; padding: 24px;
+    background: #111; color: #fff;
+    font-family: system-ui, -apple-system, sans-serif;
+    text-align: center;
+  }
+  .wrap { max-width: 650px; margin: auto; }
+  h1 { margin: 8px 0 4px; font-size: 30px; }
+  p { color: #bbb; margin: 6px 0 24px; }
+  button {
+    width: 100%; padding: 20px; margin: 10px 0;
+    border: 0; border-radius: 16px;
+    background: #242424; color: white;
+    font-size: 21px; font-weight: 700;
+    cursor: pointer;
+  }
+  button:active { transform: scale(.98); }
+  .status { min-height: 28px; color: #7cff9b; margin-top: 12px; font-weight: 700; }
+  .small { font-size: 13px; color: #777; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎧 SHADE + SIERRA</h1>
+  <p>VRChat Jukebox</p>
+
+  <button onclick="copyUrl('yt')">🎵 COPY YOUTUBE PLAYLIST</button>
+  <button onclick="copyUrl('sc')">☁️ COPY SOUNDCLOUD PLAYLIST</button>
+  <button onclick="copyUrl('backup')">🔥 COPY BACKUP URL</button>
+
+  <div class="status" id="status"></div>
+  <div class="small">Tap a button → return to VRChat → paste into the music player</div>
+</div>
+
+<script>
+const urls = {
+  yt: "https://youtube.com/playlist?list=PLavWekKsvkhs",
+  sc: "",
+  backup: ""
+};
+
+async function copyUrl(key) {
+  const url = urls[key];
+  const status = document.getElementById("status");
+
+  if (!url) {
+    status.textContent = "That option isn't configured yet.";
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(url);
+    status.textContent = "✅ URL copied!";
+  } catch (e) {
+    status.textContent = "Copy was blocked. Press and hold the URL instead.";
+  }
+}
+</script>
+</body>
+</html>
